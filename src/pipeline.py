@@ -9,14 +9,17 @@ def cargar_ventas(archivo):
     ]
     return ventas
 
-def calcular_total_tiendas(ventas, tienda_id):
+def calcular_total_tiendas(ventas, tienda_id, con_iva=True):
     total = 0
     for venta in ventas:
         if venta["tienda"] == tienda_id:
             total += venta["cantidad"] * venta["precio"]
-        return total
-
-if name == "__main__":
+        if con_iva:
+            from config import IVA
+            total *= (1 + IVA)
+            return total
+        
+if __name__ == "__main__":
     ventas = cargar_ventas("venttas_2026_01.csv")
     total = calcular_total_tiendas(ventas, "T001")
     print(f"Total tienda T001: ${total:.2f}")
