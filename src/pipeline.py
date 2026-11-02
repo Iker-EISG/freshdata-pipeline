@@ -20,3 +20,15 @@ if name == "__main__":
     ventas = cargar_ventas("venttas_2026_01.csv")
     total = calcular_total_tiendas(ventas, "T001")
     print(f"Total tienda T001: ${total:.2f}")
+
+def resumen_por_producto(ventas):
+    """Genera resumen de ventas agrupado por producto."""
+    resumen = {}
+    for venta in ventas:
+        producto = venta["producto"]
+        ingreso = venta["cantidad"] * venta["precio"]
+        if producto in resumen:
+            resumen[producto] += ingreso
+        else:
+            resumen[producto] = ingreso
+    return resumen
